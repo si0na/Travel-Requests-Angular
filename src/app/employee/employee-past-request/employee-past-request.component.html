@@ -1,0 +1,156 @@
+<app-navbar-sidebar></app-navbar-sidebar>
+<main class="container py-5 dashboard-section">
+    <h2 class="page-heading">Travel Requests</h2>
+  
+    <section class="row g-4">
+      <article *ngFor="let request of travelRequests" class="col-md-4">
+        <div class="card request-card" tabindex="5">
+          <!-- Card Header: Status-Based Color -->
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+            [ngClass]="{
+              'bg-warning text-dark': request.status === 'pending',
+              'bg-success text-white': request.status === 'approved',
+              'bg-danger text-white': request.status === 'denied',
+              'bg-purple text-white': request.status === 'additional info requested'
+            }"
+          >
+          <span class="fw-bold">{{ request.destination | uppercase }}</span>
+
+            <span class="badge bg-light text-dark">{{ request.status | uppercase }}</span>
+          </div>
+  
+          <!-- Card Body: Display More Details -->
+          <div class="card-body">
+            <p><strong>Business Purpose:</strong> {{ request.travel_purpose }}</p>
+            <p><strong>Dates:</strong> {{ request.departure_date }} - {{ request.return_date }}</p>
+          </div>
+  
+          <!-- Card Footer: Actions -->
+          <div class="card-footer text-end">
+            <button class="btn btn-outline-primary btn-sm" (click)="viewRequest(request)">
+              View
+            </button>
+            <button
+              *ngIf="request.status === 'pending'"
+              class="btn btn-outline-warning btn-sm ms-2"
+              (click)="openResubmitModal(request)"
+            >
+              Resubmit
+            </button>
+          </div>
+          
+        </div>
+      </article>
+    </section>
+  </main>
+  
+  <!-- View Request Modal -->
+  <div #viewRequestModal class="modal fade" tabindex="-1" aria-labelledby="viewRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Travel Request Details</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Destination:</strong> {{ selectedRequest.destination }}</p>
+          <p><strong>Business Purpose:</strong> {{ selectedRequest.travel_purpose }}</p>
+          <p><strong>Origin:</strong> {{ selectedRequest.origin }}</p>
+          <p><strong>Departure Date:</strong> {{ selectedRequest.departure_date }}</p>
+          <p><strong>Return Date:</strong> {{ selectedRequest.return_date }}</p>
+          <p><strong>Mode of Travel:</strong> {{ selectedRequest.mode_of_travel }}</p>
+          <p><strong>Needs Lodging:</strong> {{ selectedRequest.needs_lodging }}</p> 
+          <p><strong>Lodging Information:</strong> {{ selectedRequest.lodging_info }}</p> 
+          <p><strong>Additional Notes:</strong> {{ selectedRequest.additional_notes ? selectedRequest.additional_notes : 'N/A' }}</p>
+          <p><strong>Manager:</strong> {{ selectedRequest.manager_name}}</p> 
+          <p><strong>Status:</strong> {{ selectedRequest.status }}</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Resubmit Modal -->
+  <div class="modal fade" #resubmitModal tabindex="-1" aria-labelledby="resubmitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resubmitModalLabel">Resubmit Travel Request</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <form #resubmitForm="ngForm">
+            <div class="mb-3">
+              <label class="form-label">Travel Purpose</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedRequest.travel_purpose" name="travel_purpose" required />
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label">Origin</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedRequest.origin" name="origin" required />
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label">Destination</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedRequest.destination" name="destination" required />
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label">Departure Date</label>
+              <input type="date" class="form-control" [(ngModel)]="selectedRequest.departure_date" name="departure_date" required />
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label">Return Date</label>
+              <input type="date" class="form-control" [(ngModel)]="selectedRequest.return_date" name="return_date" required />
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label">Mode of Travel</label>
+              <select class="form-control" [(ngModel)]="selectedRequest.mode_of_travel" name="mode_of_travel" required>
+                <option value="flight">Flight</option>
+                <option value="train">Train</option>
+                <option value="bus">Bus</option>
+                <option value="car">Car</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Needs Lodging</label>
+              <select class="form-control" [(ngModel)]="selectedRequest.needs_lodging" name="needs_lodging">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Lodging Details</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedRequest.lodging_info" name="lodging_info">
+              </div>
+
+            <div class="mb-3">
+              <label class="form-label">Additional Notes</label>
+              <textarea class="form-control" [(ngModel)]="selectedRequest.additional_notes" name="additional_notes"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Manager</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedRequest.manager_name" name="manger_name" required />
+              </div>
+          </form>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="submitResubmission()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<main class="container grid-container py-5 dashboard-section">
+    <section class="mx-auto" style="max-width: 500px;">
+    <!-- Form Heading -->
+    <h2 class="text-center mb-4">
+      <i class="bi bi-person-plus-fill"></i> Add New Employee
+    </h2>
+  
+    <!-- Employee Registration Form -->
+    <form (ngSubmit)="submitEmployee()">
+      <!-- Username Field -->
+      <label class="form-label fw-bold" for="username">Username</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+        <input type="text" id="username" class="form-control" placeholder="Enter username" [(ngModel)]="employee.employee_name" name="employee_name" required>
+      </div>
+  
+      <!-- Email Field -->
+      <label class="form-label fw-bold" for="email">Email</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+        <input type="email" id="email" class="form-control" placeholder="Enter email" [(ngModel)]="employee.employee_email" name="employee_email" required>
+      </div>
+  
+      <!-- Password Field -->
+      <label class="form-label fw-bold" for="password">Password</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" [(ngModel)]="employee.password" name="password" required>
+      </div>
+  
+      <!-- Manager Field -->
+      <label class="form-label fw-bold" for="manager">Manager</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+        <input type="text" id="manager" class="form-control" [(ngModel)]="employee.manager" name="manager" required>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100">
+        <i class="bi bi-person-plus-fill me-2"></i> Add Employee
+      </button>
+    </form>
+  </section>
+  </main>
