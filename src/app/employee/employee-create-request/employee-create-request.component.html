@@ -1,0 +1,110 @@
+<app-navbar-sidebar></app-navbar-sidebar>
+<!-- Main Content Section -->
+<main class="container-fluid mt-5">
+    <section class="w-75 form-container mx-auto">
+      <h2 class="form-heading">Employee Request Form</h2>
+      <form [formGroup]="travelRequestForm" (ngSubmit)="submitRequest()">
+        
+        <div class="mb-4">
+          <label class="form-label mb-2">Travel Details</label>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                <input type="text" class="form-control" placeholder="Enter departure city" formControlName="origin" autocomplete="address-level2" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                <input type="text" class="form-control" placeholder="Enter destination city" formControlName="destination" autocomplete="address-level2" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label mb-2">Travel Mode & Date Range</label>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-train-front"></i></span>
+                <select class="form-select" formControlName="mode_of_travel" required>
+                  <option value="" disabled selected>Select Mode</option>
+                  <option value="flight">Flight</option>
+                  <option value="train">Train</option>
+                  <option value="car">Car</option>
+                  <option value="bus">Bus</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" class="form-control" formControlName="departure_date" required>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                <input type="date" class="form-control" formControlName="return_date" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label mb-2">Additional Requests</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+            <textarea class="form-control" rows="2" placeholder="Any extra requirements" formControlName="additional_notes" autocomplete="off"></textarea>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label mb-2">Lodging Information</label>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                <select class="form-select" formControlName="needs_lodging">
+                  <option value="" disabled selected>Lodging Required?</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                <input type="text" class="form-control" placeholder="Lodging Location" formControlName="lodging_info" autocomplete="off">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label mb-2">Purpose of Travel</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-chat-left-text"></i></span>
+            <textarea class="form-control" rows="2" placeholder="State your purpose" formControlName="travel_purpose" autocomplete="off" required></textarea>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label mb-2">Manager</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-check"></i></span>
+            <input type="text" class="form-control" formControlName="manager_name" autocomplete="name">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+      </form>
+    </section>
+</main>
+
+  
+
+  
+  
